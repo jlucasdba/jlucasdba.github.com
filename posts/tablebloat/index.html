@@ -3,19 +3,19 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rows and Columns &middot; Rows and Columns</title>
+    <title>Postgres Table Bloat &middot; Rows and Columns</title>
 
-    <meta name="description" content="Journal of a Database Admin">
+    <meta name="description" content="">
 
     <meta name="generator" content="Hugo 0.78.2" />
     <meta name="twitter:card" content="summary">
     
-    <meta name="twitter:title" content="Rows and Columns &middot; Rows and Columns">
-    <meta name="twitter:description" content="Journal of a Database Admin">
+    <meta name="twitter:title" content="Postgres Table Bloat &middot; Rows and Columns">
+    <meta name="twitter:description" content="">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="Rows and Columns &middot; Rows and Columns">
-    <meta property="og:description" content="Journal of a Database Admin">
+    <meta property="og:title" content="Postgres Table Bloat &middot; Rows and Columns">
+    <meta property="og:description" content="">
 
     <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Oxygen:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css">
@@ -59,7 +59,6 @@
         <div>
             
             <div class="posts">
-                
                 <h1 class="content-subhead">25 Nov 2020, 11:29</h1>
                 <section class="post">
                     <header class="post-header">
@@ -71,7 +70,17 @@
                             
                         </p>
                     </header>
-
+                    
+                    <div class="post-share">
+                        <div class="post-share-links">
+                            <h4 style="">Share</h4>
+                            
+                            
+                            
+                            
+                        </div>
+                    </div>
+                    
                     <div class="post-description">
                         <p>One of the things DBAs coming from other database systems (like Oracle) need to be aware of when coming to Postgres is how Postgres manages changed data. This is covered in depth in a lot of other places, so I won&rsquo;t repeat in too much detail. The short version is that when a row is updated or deleted, Postgres maintains the old version of that row within the table data file. Visibility of the old version to concurrent transactions is controlled by transaction id. Eventually, when the old row versions are no longer needed, they are garbage collected by the table vacuum process.</p>
 <p>This is different than a system like Oracle, where old data is written to a separate space (undo), referenced when needed, and discarded when no longer needed. Both approaches have positives and negatives. Postgres' advantage is that transaction rollbacks are fast. The data is still in the datafiles, so a rollback is simply a question of manipulating transaction ids. In an undo-based system, rollbacks can take a very long time if a lot of data has to be copied back out of undo. The disadvantage is that heavily written tables in Postgres can become physically very large, even if the number of live rows is relatively small. This is often referred to as &ldquo;table bloat&rdquo;. Vacuuming more frequently can help, but may not eliminate the problem. It&rsquo;s possible to wind up with large empty spaces in undo-based systems, but this really only happens as a result of large-scale deletes, and the effect is not really cumulative like it can be in Postgres.</p>
@@ -194,32 +203,9 @@ select p1.pagenum, coalesce(p2.c,0) as c from (select distinct pagenum from page
 </ol>
 
                     </div>
+                    
                 </section>
-                
-                <h1 class="content-subhead">21 Nov 2020, 17:55</h1>
-                <section class="post">
-                    <header class="post-header">
-
-                        <a href="https://jlucasdba.github.io/posts/firstpost/" class="post-title">Hello, World!</a>
-
-                        <p class="post-meta">
-                            
-                            
-                        </p>
-                    </header>
-
-                    <div class="post-description">
-                        <p>So this is an experiment. I&rsquo;ve never tried to do a blog before, and we&rsquo;re going to see how it goes.</p>
-<p>I&rsquo;ve worked in tech a lot of years now. Every so often you come across an interesting problem or learn something new, and I&rsquo;ve often thought it would be nice to have a place to write it up and share it with others. So that&rsquo;s what I aim for this page to be. I can&rsquo;t promise I&rsquo;ll update often, or that anyone else will find the content interesting. But if I write it up, I can promise it&rsquo;ll be something <strong>I</strong> found interesting. Maybe you will too.</p>
-<p>My primary trade is as a database admin, so you can expect a lot of Postgres, and maybe some Oracle. I also write a lot of Python, so probably some of that as well. And after that we&rsquo;ll see.</p>
-<p>Welcome aboard.</p>
-
-                    </div>
-                </section>
-                
             </div>
-            
-
             <div class="footer">
     <div class="pure-menu pure-menu-horizontal pure-menu-open">
         <ul>
