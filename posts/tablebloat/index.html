@@ -71,16 +71,6 @@
                         </p>
                     </header>
                     
-                    <div class="post-share">
-                        <div class="post-share-links">
-                            <h4 style="">Share</h4>
-                            
-                            
-                            
-                            
-                        </div>
-                    </div>
-                    
                     <div class="post-description">
                         <p>One of the things DBAs coming from other database systems (like Oracle) need to be aware of when coming to Postgres is how Postgres manages changed data. This is covered in depth in a lot of other places, so I won&rsquo;t repeat in too much detail. The short version is that when a row is updated or deleted, Postgres maintains the old version of that row within the table data file. Visibility of the old version to concurrent transactions is controlled by transaction id. Eventually, when the old row versions are no longer needed, they are garbage collected by the table vacuum process.</p>
 <p>This is different than a system like Oracle, where old data is written to a separate space (undo), referenced when needed, and discarded when no longer needed. Both approaches have positives and negatives. Postgres' advantage is that transaction rollbacks are fast. The data is still in the datafiles, so a rollback is simply a question of manipulating transaction ids. In an undo-based system, rollbacks can take a very long time if a lot of data has to be copied back out of undo. The disadvantage is that heavily written tables in Postgres can become physically very large, even if the number of live rows is relatively small. This is often referred to as &ldquo;table bloat&rdquo;. Vacuuming more frequently can help, but may not eliminate the problem. It&rsquo;s possible to wind up with large empty spaces in undo-based systems, but this really only happens as a result of large-scale deletes, and the effect is not really cumulative like it can be in Postgres.</p>
