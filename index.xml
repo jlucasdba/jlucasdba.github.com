@@ -6,7 +6,17 @@
     <description>Recent content on Rows and Columns</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 25 Nov 2020 11:29:05 -0600</lastBuildDate><atom:link href="https://jlucasdba.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 30 Nov 2020 17:19:55 -0600</lastBuildDate><atom:link href="https://jlucasdba.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hugo</title>
+      <link>https://jlucasdba.github.io/posts/hugo/</link>
+      <pubDate>Mon, 30 Nov 2020 17:19:55 -0600</pubDate>
+      
+      <guid>https://jlucasdba.github.io/posts/hugo/</guid>
+      <description>I wanted to do a quick post about the blogging setup I&amp;rsquo;m using, and why I chose it. The purpose of this blog is to provide a place to do write-ups on topics of interest I run across in my work, and share them with the community. Github Pages seemed like a natural (and inexpensive!) hosting solution, given the target audience.
+While I was researching hosting, the topic of static site generators came up.</description>
+    </item>
+    
     <item>
       <title>Postgres Table Bloat</title>
       <link>https://jlucasdba.github.io/posts/tablebloat/</link>

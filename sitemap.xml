@@ -3,17 +3,22 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://jlucasdba.github.io/posts/tablebloat/</loc>
-    <lastmod>2020-11-25T11:29:05-06:00</lastmod>
+    <loc>https://jlucasdba.github.io/posts/hugo/</loc>
+    <lastmod>2020-11-30T17:19:55-06:00</lastmod>
   </url>
   
   <url>
     <loc>https://jlucasdba.github.io/posts/</loc>
-    <lastmod>2020-11-25T11:29:05-06:00</lastmod>
+    <lastmod>2020-11-30T17:19:55-06:00</lastmod>
   </url>
   
   <url>
     <loc>https://jlucasdba.github.io/</loc>
+    <lastmod>2020-11-30T17:19:55-06:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jlucasdba.github.io/posts/tablebloat/</loc>
     <lastmod>2020-11-25T11:29:05-06:00</lastmod>
   </url>
   
