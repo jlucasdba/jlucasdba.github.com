@@ -6,7 +6,16 @@
     <description>Recent content in Posts on Rows and Columns</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 30 Nov 2020 17:19:55 -0600</lastBuildDate><atom:link href="https://jlucasdba.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 08 Dec 2020 20:06:11 -0600</lastBuildDate><atom:link href="https://jlucasdba.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Git filter-branch</title>
+      <link>https://jlucasdba.github.io/posts/git-filter-branch/</link>
+      <pubDate>Tue, 08 Dec 2020 20:06:11 -0600</pubDate>
+      
+      <guid>https://jlucasdba.github.io/posts/git-filter-branch/</guid>
+      <description>Let&amp;rsquo;s talk about one of the less-understood git commands for a minute: git filter-branch. What do you do if some element exists in your git repository that you need to expunge? Say a password, or a sensitive email address. Well, ideally you should change the password or the email address, because rewriting git history is not something you should undertake lightly. But, if you&amp;rsquo;re a brave soul who ignores the warning signs, and ventures down the dark path, filter-branch is what you use.</description>
+    </item>
+    
     <item>
       <title>Hugo</title>
       <link>https://jlucasdba.github.io/posts/hugo/</link>

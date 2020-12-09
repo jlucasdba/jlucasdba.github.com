@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git filter-branch &middot; Rows and Columns</title>
+
+    <meta name="description" content="">
+
+    <meta name="generator" content="Hugo 0.78.2" />
+    <meta name="twitter:card" content="summary">
+    
+    <meta name="twitter:title" content="Git filter-branch &middot; Rows and Columns">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Git filter-branch &middot; Rows and Columns">
+    <meta property="og:description" content="">
+
+    <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Oxygen:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css">
+
+    <link rel="stylesheet" href='https://jlucasdba.github.io/css/all.min.css'>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <link rel="alternate" type="application/rss+xml" title="Rows and Columns" href='https://jlucasdba.github.io/index.xml' />
+</head>
+<body>
+
+
+<div id="layout" class="pure-g">
+    <div class="sidebar pure-u-1 pure-u-md-1-4">
+    <div class="header">
+        <hgroup>
+            <h1 class="brand-title"><a href="https://jlucasdba.github.io/">Rows and Columns</a></h1>
+            <h2 class="brand-tagline"> Journal of a Database Admin </h2>
+            <h2><a href="/about">About Me</a></h2>
+        </hgroup>
+
+        <nav class="nav">
+            <ul class="nav-list">
+                
+                
+                
+                
+                <li class="nav-item">
+                    <a class="pure-button" href='https://jlucasdba.github.io/index.xml'>
+                        <i class="fa fa-rss"></i> rss
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+    <div class="content pure-u-1 pure-u-md-3-4">
+        <div>
+            
+            <div class="posts">
+                <h1 class="content-subhead">08 Dec 2020, 20:06</h1>
+                <section class="post">
+                    <header class="post-header">
+
+                        <a href="https://jlucasdba.github.io/posts/git-filter-branch/" class="post-title">Git filter-branch</a>
+
+                        <p class="post-meta">
+                            
+                            
+                        </p>
+                    </header>
+                    
+                    <div class="post-description">
+                        <p>Let&rsquo;s talk about one of the less-understood git commands for a minute: git filter-branch. What do you do if some element exists in your git repository that you need to expunge? Say a password, or a sensitive email address. Well, ideally you should change the password or the email address, because rewriting git history is not something you should undertake lightly. But, if you&rsquo;re a brave soul who ignores the warning signs, and ventures down the dark path, filter-branch is what you use.</p>
+<p>If you&rsquo;re at all familiar with git, every commit depends on all the previous gits before it. You can&rsquo;t change an old commit without also rewriting any newer commits. And that&rsquo;s exactly what filter-branch does. It walks through the entire commit history of a branch, applies a filter at each step, and creates new commits from the filtered result.</p>
+<p>Here&rsquo;s a really simple example.</p>
+<pre><code>* commit c36d131655f4e73ca4101674dde213a0f7a0794c (HEAD, origin/master, origin/HEAD, master)
+| Author: James Lucas &lt;sensitive.email&gt;
+| Date:   Mon Dec 7 15:16:43 2020 -0600
+| 
+|     Second commit.
+|  
+* commit 8fa4b4ae6a4e0abcc2d643988467ef11a91d2844
+  Author: James Lucas &lt;sensitive.email&gt;
+  Date:   Mon Dec 7 15:16:32 2020 -0600
+  
+      First commit.
+</code></pre><p>Oops. We used an email address we shouldn&rsquo;t have. Maybe a personal email instead of a work email. Filter-branch has a number of different filters. For rewriting metadata info like author email, the one you want is the <strong>env-filter</strong>. You provide a block to be executed for each processed commit (which might be a complex script in and of itself), and the environment variables set at the end are used to rewrite the commit metadata. (There&rsquo;s a list of available filters and how to use them in the <a href="https://git-scm.com/docs/git-filter-branch">git-filter-branch man page</a>). So in our example, we want to set the GIT_AUTHOR_EMAIL variable, to change the author email to something else.  So our command looks like this:</p>
+<pre><code>git filter-branch --env-filter 'export GIT_AUTHOR_EMAIL=&quot;public.email&quot;' master
+Rewrite c36d131655f4e73ca4101674dde213a0f7a0794c (2/2)
+Ref 'refs/heads/master' was rewritten
+</code></pre><p>And the resulting log looks like</p>
+<pre><code>* commit 575c0793decabdf517eb611bbd74a6cfeeb14b88 (HEAD, master)
+| Author: James Lucas &lt;public.email&gt;
+| Date:   Mon Dec 7 15:16:43 2020 -0600
+| 
+|     Second commit.
+|  
+* commit af3db6517ddf3437878b7b4ab9dcda13dc5bd427
+  Author: James Lucas &lt;public.email&gt;
+  Date:   Mon Dec 7 15:16:32 2020 -0600
+  
+      First commit.
+  
+* commit c36d131655f4e73ca4101674dde213a0f7a0794c (origin/master, origin/HEAD, refs/original/refs/heads/master)
+| Author: James Lucas &lt;sensitive.email&gt;
+| Date:   Mon Dec 7 15:16:43 2020 -0600
+| 
+|     Second commit.
+|  
+* commit 8fa4b4ae6a4e0abcc2d643988467ef11a91d2844
+  Author: James Lucas &lt;sensitive.email&gt;
+  Date:   Mon Dec 7 15:16:32 2020 -0600
+  
+      First commit.
+</code></pre><p>Okay, something strange happened here.  We got our new commits, and our master branch is pointing at the rewritten commit history. But there&rsquo;s a parallel commit history in the log as well, with our old commits. This represents two things. The first is a remote branch (origin/master), which we&rsquo;ll get to in a minute. The other is that filter-branch marks your old commit history for you as a backup. This is pretty important, because complex filter situations can be very easy to mess up. This backup history gives you an opportunity to compare the old and new commits, and fallback if something has gone wrong. If you&rsquo;re confident everything is okay, you can remove the backup history with</p>
+<pre><code>git update-ref -d refs/original/refs/heads/master
+</code></pre><p>Now, let&rsquo;s talk about our remote branch on origin. I mentioned before that filter-branch is dangerous, and here&rsquo;s why. In a local repository, with no connection to anything else, rewriting commits isn&rsquo;t really a big deal. But as soon as you start thinking about distributed operations, rewriting history gets messy. As the log above shows, you&rsquo;ve just rewritten your entire commit history with new commits. If you try to push these to a remote repository (for example, github), the new commits have no common history with your old commits. They represent a completely parallel history. Normally git will reject a push in a situation like this. This is where <code>git push --force</code> (another dangerous command) comes into the picture. You can tell git to ignore the normal safety rules, and overwrite any previous commits in the remote branch. But then any other child repos of your remote will also be out of sync, and need to be re-cloned, or at least carefully cleaned up. Any branches other developers are working on will need to be rebased. And if everyone&rsquo;s not very careful, there&rsquo;s a pretty good chance of developers working on another repository accidentally reintroducing the element you were trying to get rid of in the first place.</p>
+<p>In a distributed project, you should absolutely try to avoid rewrites like this if you can help it. Doubly so if the project is public. <strong>Be very careful what you commit, and be even more careful what you push.</strong> But sometimes we all mess up, and git filter-branch is there for the worst of those cases.</p>
+
+                    </div>
+                    
+                </section>
+            </div>
+            <div class="footer">
+    <div class="pure-menu pure-menu-horizontal pure-menu-open">
+        <ul>
+            <li>Powered by <a class="hugo" href="https://gohugo.io/" target="_blank">hugo</a></li>
+            <li>Copyright © 2020 James Lucas</li>
+        </ul>
+    </div>
+</div>
+<script src='https://jlucasdba.github.io/js/all.min.js'></script>
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', '', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>
