@@ -6,7 +6,18 @@
     <description>Recent content on Rows and Columns</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 08 Dec 2020 20:06:11 -0600</lastBuildDate><atom:link href="https://jlucasdba.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 31 Dec 2020 13:51:29 -0600</lastBuildDate><atom:link href="https://jlucasdba.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Postgres shared_buffers</title>
+      <link>https://jlucasdba.github.io/posts/shared_buffers/</link>
+      <pubDate>Thu, 31 Dec 2020 13:51:29 -0600</pubDate>
+      
+      <guid>https://jlucasdba.github.io/posts/shared_buffers/</guid>
+      <description>Let&amp;rsquo;s talk about shared_buffers in postgres. Postgres has very good documentation, but the tuning of this important parameter is one area where the documentation is unfortunately a bit vague.
+When postgres starts up, it grabs a chunk of memory that is shared between all backend server processes. Shared_buffers controls the size of this shared memory pool. Every page the database reads or writes passes through this shared memory.
+Everytime the database reads a page from disk, it&amp;rsquo;s stored in these shared buffers.</description>
+    </item>
+    
     <item>
       <title>Git filter-branch</title>
       <link>https://jlucasdba.github.io/posts/git-filter-branch/</link>
