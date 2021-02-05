@@ -6,7 +6,16 @@
     <description>Recent content on Rows and Columns</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 31 Dec 2020 13:51:29 -0600</lastBuildDate><atom:link href="https://jlucasdba.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 04 Feb 2021 18:39:33 -0600</lastBuildDate><atom:link href="https://jlucasdba.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>DIMM Ordering</title>
+      <link>https://jlucasdba.github.io/posts/dimm-ordering/</link>
+      <pubDate>Thu, 04 Feb 2021 18:39:33 -0600</pubDate>
+      
+      <guid>https://jlucasdba.github.io/posts/dimm-ordering/</guid>
+      <description>I usually talk about software issues, but today an interesting story about hardware. I was upgrading the RAM in my personal desktop a few weeks ago. I bought a 2x16GB DIMM kit, rated for DDR-3200 XMP operation. XMP is basically a factory-flagged overclock mode, where setting the motherboard to XMP mode should allow the system to clock the RAM at the rated speed on the package. There&amp;rsquo;s no absolute guarantee this will work with any given motherboard, but the DIMMs are checked at the factory and binned for it.</description>
+    </item>
+    
     <item>
       <title>Postgres shared_buffers</title>
       <link>https://jlucasdba.github.io/posts/shared_buffers/</link>
