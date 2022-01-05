@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pgstratify &middot; Rows and Columns</title>
+
+    <meta name="description" content="">
+
+    <meta name="generator" content="Hugo 0.78.2" />
+    <meta name="twitter:card" content="summary">
+    
+    <meta name="twitter:title" content="pgstratify &middot; Rows and Columns">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="pgstratify &middot; Rows and Columns">
+    <meta property="og:description" content="">
+
+    <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Oxygen:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/grids-responsive-min.css">
+
+    <link rel="stylesheet" href='https://jlucasdba.github.io/css/all.min.css'>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <link rel="alternate" type="application/rss+xml" title="Rows and Columns" href='https://jlucasdba.github.io/index.xml' />
+</head>
+<body>
+
+
+<div id="layout" class="pure-g">
+    <div class="sidebar pure-u-1 pure-u-md-1-4">
+    <div class="header">
+        <hgroup>
+            <h1 class="brand-title"><a href="https://jlucasdba.github.io/">Rows and Columns</a></h1>
+            <h2 class="brand-tagline"> Journal of a Database Admin </h2>
+            <h2><a href="/about">About Me</a></h2>
+        </hgroup>
+
+        <nav class="nav">
+            <ul class="nav-list">
+                
+                
+                
+                
+                <li class="nav-item">
+                    <a class="pure-button" href='https://jlucasdba.github.io/index.xml'>
+                        <i class="fa fa-rss"></i> rss
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+    <div class="content pure-u-1 pure-u-md-3-4">
+        <div>
+            
+            <div class="posts">
+                <h1 class="content-subhead">04 Jan 2022, 23:14</h1>
+                <section class="post">
+                    <header class="post-header">
+
+                        <a href="https://jlucasdba.github.io/posts/pgstratify/" class="post-title">pgstratify</a>
+
+                        <p class="post-meta">
+                            
+                            
+                        </p>
+                    </header>
+                    
+                    <div class="post-description">
+                        <p>I wanted to share a project I&rsquo;ve been working on the last few weeks, called pgstratify. This was written in equal parts to provide a tool I thought would be useful for postgres DBAs, and as an exercise to teach myself Go. I feel like it succeeded pretty well on both fronts.</p>
+<p>The core idea of pgstratify is to help a DBA manage the storage parameters on individual tables in the database. Specifically the ones that determine when a table is due for autovacuum.</p>
+<p>The default autovacuum setup for postgres is percentage-based. When 20% of the rows in a table have been modified, a vacuum pass is triggered. This works fine for small tables, but it doesn&rsquo;t scale very well to large ones. You could reduce the percentage to say, 5%. But that means you spend cycles vacuuming all your tables more often, and it still doesn&rsquo;t really address the scalability problem. Ideally for big tables you probably want to set a hard threshold, where once the table reaches a certain size, autovacuum stops being percentage-based, and instead triggers every time a specific number of rows have been modified. You can do this already with storage parameters, but they need to be manually set on each table with ALTER TABLE.</p>
+<p>Enter pgstratify. With pgstratify, the idea is to divide your tables into two or more size categories (or strata, if you prefer), and apply different sets of storage parameters to them. Every time pgstratify is run, it scans the database for tables that are out of sync with the parameter rules you&rsquo;ve defined, and brings everything in line.</p>
+<p>So if you setup pgstratify to run say, once every hour, if a table crosses the size limit you&rsquo;ve defined, its storage parameters will be modified to set hard autovacuum threshold. You won&rsquo;t have to manually intervene at all. It works the other way too - if the table size goes back down, the parameters will be reverted. The general idea is you&rsquo;d use the system-level settings for average tables, and pgstratify will only really need to work on the outliers.</p>
+<p>As far as the &ldquo;learning Go&rdquo; part, I already had some experience, but this was the first decent-sized project I&rsquo;d tried to take on. I spent way more time plumbing out basic functionality than I would have with something like Python, and I feel like only part of that was because I didn&rsquo;t know what I was doing. This is a pretty verbose language. I&rsquo;m still not totally sold on the error handling model, although it did at least bother me less as time went by. I do think the language has a lot of good ideas, and this probably won&rsquo;t be the last project I use it on. Getting near-C performance in a language with a lot of modern conveniences is certainly appealing.</p>
+<p>I put a lot of work into developing pgstratify, and I hope it will be useful to people. I might do another post in the near future with some usage examples. In the meantime, feel free to check out the <a href="https://github.com/jlucasdba/pgstratify">git repo</a>.</p>
+
+                    </div>
+                    
+                </section>
+            </div>
+            <div class="footer">
+    <div class="pure-menu pure-menu-horizontal pure-menu-open">
+        <ul>
+            <li>Powered by <a class="hugo" href="https://gohugo.io/" target="_blank">hugo</a></li>
+            <li>Copyright © 2020 James Lucas</li>
+            <li>ALL VIEWS AND OPINIONS ARE MY OWN.<br>THE AUTHOR WILL NOT BE LIABLE FOR DAMAGES OR LOSSES RESULTING FROM<br>USE OR IMPLEMENTATION OF INFORMATION OR TECHNIQUES PUBLISHED ON THIS SITE.</li>
+        </ul>
+    </div>
+</div>
+<script src='https://jlucasdba.github.io/js/all.min.js'></script>
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', '', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>
