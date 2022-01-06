@@ -6,7 +6,17 @@
     <description>Recent content in Posts on Rows and Columns</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 04 Jan 2022 23:14:00 -0600</lastBuildDate><atom:link href="https://jlucasdba.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 05 Jan 2022 17:53:07 -0600</lastBuildDate><atom:link href="https://jlucasdba.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>pgstratify, Part 2</title>
+      <link>https://jlucasdba.github.io/posts/pgstratify2/</link>
+      <pubDate>Wed, 05 Jan 2022 17:53:07 -0600</pubDate>
+      
+      <guid>https://jlucasdba.github.io/posts/pgstratify2/</guid>
+      <description>In my last post I talked about my new tool, pgstratify. I started writing this post to go over pgstratify use-cases, but it ended up being all about the details of autovacuuming instead. The use-cases will have to wait for Part 3. Note that I&amp;rsquo;m turning autovacuum on and off here for illustration purposes. Obviously don&amp;rsquo;t do this in a production database.
+So to start with, we create a small test table and insert some rows into it:</description>
+    </item>
+    
     <item>
       <title>pgstratify</title>
       <link>https://jlucasdba.github.io/posts/pgstratify/</link>
